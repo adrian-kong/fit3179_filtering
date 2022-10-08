@@ -1,0 +1,116 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "vconcat": [
+    {
+      "title": "Trajectory",
+      "width": 300,
+      "height": 300,
+      "layer": [
+        {
+          "data": {
+            "url": "data/trimmed3k.csv"
+          },
+          "transform": [
+            {
+              "filter": {
+                "param": "time_brush"
+              }
+            }
+          ],
+          "mark": {
+            "type": "trail",
+            "tooltip": true
+          },
+          "encoding": {
+            "x": {
+              "scale": {
+                "zero": false
+              },
+              "field": "Lon \\[deg\\]",
+              "type": "quantitative",
+              "title": "Longitude"
+            },
+            "y": {
+              "scale": {
+                "zero": false
+              },
+              "field": "Lat \\[deg\\]",
+              "type": "quantitative",
+              "title": "Latitude"
+            },
+            "tooltip": [
+              {
+                "title": "Gps Time",
+                "field": "GPS TOW \\[s\\]",
+                "format": ".1f"
+              },
+              {
+                "title": "Latitude",
+                "field": "Lat \\[deg\\]",
+                "format": ".8f"
+              },
+              {
+                "title": "Longitude",
+                "field": "Lon \\[deg\\]",
+                "format": ".8f"
+              }
+            ],
+            "order": {
+              "field": "order"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "Height above WGS84 ellipsoid over time",
+      "data": {
+        "url": "data/trimmed3k.csv"
+      },
+      "mark": {
+        "type": "area",
+        "tooltip": true
+      },
+      "height": 30,
+      "width": 300,
+      "params": [
+        {
+          "name": "time_brush",
+          "select": {
+            "type": "interval",
+            "encodings": [
+              "x"
+            ]
+          }
+        }
+      ],
+      "encoding": {
+        "x": {
+          "title": "GPS Time [sec]",
+          "field": "GPS TOW \\[s\\]",
+          "scale": {
+            "zero": false
+          },
+          "type": "quantitative"
+        },
+        "y": {
+          "title": "Height [m]",
+          "field": "Alt Ellips \\[m\\]",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {
+            "title": "Gps Time",
+            "field": "GPS TOW \\[s\\]",
+            "format": ".1f"
+          },
+          {
+            "title": "Height",
+            "field": "Alt Ellips \\[m\\]",
+            "format": ".2f"
+          }
+        ]
+      }
+    }
+  ]
+}
